@@ -8,8 +8,9 @@
  * Copyright (c) maintainers <br>
  * Copyright (c) contributors
  */
-package de.leycm.stomgate;
+package de.leycm.stomgate.perm;
 
+import de.leycm.stomgate.PermissionServices;
 import lombok.NonNull;
 
 import java.util.UUID;
@@ -44,7 +45,7 @@ public interface Permittable {
      *
      * @return UUID of the permittable object
      */
-    UUID permittableId();
+    @NonNull UUID permittableId();
 
     /**
      * Returns the permission weight for the given permission node.
@@ -57,7 +58,9 @@ public interface Permittable {
      * @param permission the permission to evaluate
      * @return an integer weight following the system rules
      */
-    int wight(@NonNull Permission permission);
+    default int wight(final @NonNull Permission permission) {
+        return PermissionServices.getInstance().resolvePermissionWeight(this, permission);
+    }
 
     /**
      * Resolves a permission node and delegates to {@link #wight(Permission)}.
@@ -65,7 +68,7 @@ public interface Permittable {
      * @param node permission node string (e.g. "chat.color")
      * @return weight associated with that node
      */
-    default int wight(@NonNull String node) {
+    default int wight(final @NonNull String node) {
         return wight(Permission.of(node));
     }
 
@@ -75,7 +78,7 @@ public interface Permittable {
      * @param permission the permission to evaluate
      * @return true if weight > 0
      */
-    default boolean has(@NonNull Permission permission) {
+    default boolean has(final @NonNull Permission permission) {
         return is(permission, weight -> weight > 0);
     }
 
@@ -85,7 +88,7 @@ public interface Permittable {
      * @param node permission node string
      * @return true if permission weight is positive
      */
-    default boolean has(@NonNull String node) {
+    default boolean has(final @NonNull String node) {
         return has(Permission.of(node));
     }
 
@@ -96,8 +99,8 @@ public interface Permittable {
      * @param predicate predicate used to validate the weight
      * @return result of predicate applied on weight
      */
-    default boolean is(@NonNull Permission permission,
-                       @NonNull Predicate<Integer> predicate) {
+    default boolean is(final @NonNull Permission permission,
+                       final @NonNull Predicate<Integer> predicate) {
         return predicate.test(wight(permission));
     }
 
@@ -108,8 +111,8 @@ public interface Permittable {
      * @param predicate predicate for weight evaluation
      * @return predicate result
      */
-    default boolean is(@NonNull String node,
-                       @NonNull Predicate<Integer> predicate) {
+    default boolean is(final @NonNull String node,
+                       final @NonNull Predicate<Integer> predicate) {
         return is(Permission.of(node), predicate);
     }
 }

@@ -8,7 +8,7 @@
  * Copyright (c) maintainers <br>
  * Copyright (c) contributors
  */
-package de.leycm.stomgate;
+package de.leycm.stomgate.perm;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
@@ -41,13 +41,14 @@ import java.util.function.Predicate;
 public record Permission(@NonNull String... node) {
 
     /**
-     * Parses a permission node using '.' as delimiter.
+     * Parses a permission node using {@code \\.} as delimiter.
      *
      * @param node raw string (e.g. "server.admin.kick")
      * @return a new Permission instance
+     * @throws IllegalArgumentException if any segment is empty or contains dots
      */
     @Contract("_ -> new")
-    public static @NonNull Permission of(@NonNull String node) {
+    public static @NonNull Permission of(final @NonNull String node) {
         return of(node, "\\.");
     }
 
@@ -57,18 +58,20 @@ public record Permission(@NonNull String... node) {
      * @param node raw node
      * @param delimiter regex used to split the node
      * @return new Permission instance
+     * @throws IllegalArgumentException if any segment is empty or contains dots
      */
     @Contract("_, _ -> new")
-    public static @NonNull Permission of(@NonNull String node,
-                                         @NonNull String delimiter) {
+    public static @NonNull Permission of(final @NonNull String node,
+                                         final @NonNull String delimiter) {
         return new Permission(node.split(delimiter));
     }
 
     /**
-     * Validates the permission parts.
+     * Validates and create the permission parts.
      *
      * @throws IllegalArgumentException if any segment is empty or contains dots
      */
+    @SuppressWarnings("preview")
     public Permission {
         if (node.length < 1) {
             throw new IllegalArgumentException("Permission node cannot be empty");
@@ -77,14 +80,13 @@ public record Permission(@NonNull String... node) {
         final String full = '"' + String.join("\", \"", node) + '"';
 
         for (String part : node) {
-            if (part.isEmpty()) {
-                throw new IllegalArgumentException("Permission parts cannot be empty " + full);
-            }
-            if (part.contains(".")) {
-                throw new IllegalArgumentException(
-                        "Permission parts cannot contain dots \"" + part + "\" in permission " + full);
-            }
+            if (part.isEmpty())
+                throw new IllegalArgumentException("Permission parts cannot be empty: " + full);
+
+            if (part.contains("."))
+                throw new IllegalArgumentException("Permission parts cannot contain dots \"" + part + "\" in permission " + full);
         }
+
     }
 
     /**
@@ -93,7 +95,7 @@ public record Permission(@NonNull String... node) {
      * @param permittable the permittable object
      * @return weight
      */
-    public int wight(@NonNull Permittable permittable) {
+    public int wight(final @NonNull Permittable permittable) {
         return permittable.wight(this);
     }
 
@@ -103,7 +105,7 @@ public record Permission(@NonNull String... node) {
      * @param permittable the permittable object
      * @return true if permission granted
      */
-    public boolean has(@NonNull Permittable permittable) {
+    public boolean has(final @NonNull Permittable permittable) {
         return permittable.has(this);
     }
 
@@ -114,8 +116,8 @@ public record Permission(@NonNull String... node) {
      * @param predicate predicate used for evaluation
      * @return predicate result
      */
-    public boolean is(@NonNull Permittable permittable,
-                      @NonNull Predicate<Integer> predicate) {
+    public boolean is(final @NonNull Permittable permittable,
+                      final @NonNull Predicate<Integer> predicate) {
         return permittable.is(this, predicate);
     }
 
@@ -134,7 +136,7 @@ public record Permission(@NonNull String... node) {
      * @param delimiter join delimiter
      * @return joined string
      */
-    public @NonNull String toString(@NonNull String delimiter) {
+    public @NonNull String toString(final @NonNull String delimiter) {
         return String.join(delimiter, node);
     }
 

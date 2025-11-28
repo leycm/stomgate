@@ -4,6 +4,8 @@ dependencies {
     compileOnly(libs.jetanno)
 
     compileOnly(libs.minestom)
+    testImplementation(libs.minestom)
+    testImplementation(libs.logback)
 }
 
 tasks.named("sourcesJar") {
