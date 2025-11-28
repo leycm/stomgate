@@ -8,14 +8,15 @@
  * Copyright (c) maintainers <br>
  * Copyright (c) contributors
  */
-package de.leycm.template;
+package de.leycm.stomgate;
 
 import de.leycm.neck.instance.Initializable;
 import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
+import net.minestom.server.MinecraftServer;
 
 /**
- * TemplateApiFactory
+ * PermissionServices
  *
  * <p>
  * Core interface for the Template API. Provides a singleton instance
@@ -28,10 +29,10 @@ import org.jetbrains.annotations.Contract;
  * @author LeyCM
  * @since 1.0.1
  */
-public interface TemplateApiFactory extends Initializable {
+public interface PermissionServices extends Initializable {
 
     /**
-     * Returns the singleton instance of the {@code TemplateApiFactory}.
+     * Returns the singleton instance of the {@code PermissionServices}.
      *
      * <p>
      * This method relies on the {@link Initializable#getInstance(Class)} mechanism to retrieve
@@ -39,14 +40,19 @@ public interface TemplateApiFactory extends Initializable {
      * {@link NullPointerException} is thrown.
      * </p>
      *
-     * @return the singleton instance of {@code TemplateApiFactory}
+     * @return the singleton instance of {@code PermissionServices}
      * @throws NullPointerException if no implementation is registered
      * @see Initializable#getInstance(Class)
      */
     @NonNull
     @Contract(pure = true)
-    static TemplateApiFactory getInstance() {
-        return Initializable.getInstance(TemplateApiFactory.class);
+    static PermissionServices getInstance() {
+        return Initializable.getInstance(PermissionServices.class);
+    }
+
+    @Override
+    default void onInstall() {
+        MinecraftServer.getConnectionManager().setPlayerProvider();
     }
 
 }

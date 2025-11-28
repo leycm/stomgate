@@ -2,6 +2,8 @@ dependencies {
     implementation(project(":api"))
     implementation(libs.leyneck)
     compileOnly(libs.jetanno)
+
+    compileOnly(libs.minestom)
 }
 
 tasks.named("sourcesJar") {

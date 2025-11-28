@@ -8,13 +8,13 @@
  * Copyright (c) maintainers <br>
  * Copyright (c) contributors
  */
-package de.leycm.template;
+package de.leycm.stomgate;
 
 /**
- * TemplateBootstrap
+ * RedisPermissionManager
  *
  * <p>
- * Default implementation of {@link TemplateApiFactory}. Serves as the entry
+ * Default implementation of {@link PermissionServices}. Serves as the entry
  * point for initializing and accessing the Template API.
  * </p>
  *
@@ -25,6 +25,6 @@ package de.leycm.template;
  * @author LeyCM
  * @since 1.0.1
  */
-public class TemplateBootstrap implements TemplateApiFactory {
+public class RedisPermissionManager implements PermissionServices {
 
 }
