@@ -1,24 +1,31 @@
+/**
+ * LECP-LICENSE NOTICE
+ * <br><br>
+ * This Sourcecode is under the LECP-LICENSE. <br>
+ * License at: <a href="https://github.com/leycm/leycm/blob/main/LICENSE">GITHUB</a>
+ * <br><br>
+ * Copyright (c) LeyCM <a href="mailto:leycm@proton.me">leycm@proton.me</a> l <br>
+ * Copyright (c) maintainers <br>
+ * Copyright (c) contributors
+ */
 package de.leycm.stomgate;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 public record Permission(@NonNull String... node) {
 
-    @Contract("_, _ -> new")
-    public static @NotNull Permission of(final @NonNull String node, final @NonNull String delimiter) {
-        return new Permission(node.split(delimiter));
+    @Contract("_ -> new")
+    public static @NonNull Permission of(final @NonNull String node) {
+        return of(node, "\\.");
     }
 
-    @Contract("_ -> new")
-    public static @NotNull Permission of(final @NonNull String node) {
-        return new Permission(node.split("\\."));
+    @Contract("_, _ -> new")
+    public static @NonNull Permission of(final @NonNull String node,
+                                         final @NonNull String delimiter) {
+        return new Permission(node.split(delimiter));
     }
 
     public Permission {
