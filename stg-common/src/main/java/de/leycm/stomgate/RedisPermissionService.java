@@ -41,6 +41,12 @@ public class RedisPermissionService implements PermissionServices {
     }
 
     @Override
+    public void updatePermissionWeight(@NonNull Permittable permittable, @NonNull Permission permission, int weight) {
+
+    }
+
+
+    @Override
     public @Nullable PermittableGroup permittableGroupOf(@NonNull String id) {
         return null;
     }

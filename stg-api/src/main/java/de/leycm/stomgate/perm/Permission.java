@@ -90,23 +90,23 @@ public record Permission(@NonNull String... node) {
     }
 
     /**
-     * Convenience wrapper for {@link Permittable#wight(Permission)}.
+     * Convenience wrapper for {@link Permittable#permissionWeight(Permission)}.
      *
      * @param permittable the permittable object
      * @return weight
      */
-    public int wight(final @NonNull Permittable permittable) {
-        return permittable.wight(this);
+    public int permissionWeight(final @NonNull Permittable permittable) {
+        return permittable.permissionWeight(this);
     }
 
     /**
-     * Convenience wrapper for {@link Permittable#has(Permission)}.
+     * Convenience wrapper for {@link Permittable#hasPermission(Permission)}.
      *
      * @param permittable the permittable object
      * @return true if permission granted
      */
-    public boolean has(final @NonNull Permittable permittable) {
-        return permittable.has(this);
+    public boolean hasPermission(final @NonNull Permittable permittable) {
+        return permittable.hasPermission(this);
     }
 
     /**
@@ -116,9 +116,9 @@ public record Permission(@NonNull String... node) {
      * @param predicate predicate used for evaluation
      * @return predicate result
      */
-    public boolean is(final @NonNull Permittable permittable,
+    public boolean isPermitted(final @NonNull Permittable permittable,
                       final @NonNull Predicate<Integer> predicate) {
-        return permittable.is(this, predicate);
+        return permittable.isPermitted(this, predicate);
     }
 
     /**

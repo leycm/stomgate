@@ -43,6 +43,7 @@ import java.util.UUID;
 public record PermittableGroup(String id, UUID uuid, TagHandler tagHandler)
         implements Permittable, Taggable {
 
+
     /**
      * Returns an existing {@link PermittableGroup} by its {@link UUID}.
      *

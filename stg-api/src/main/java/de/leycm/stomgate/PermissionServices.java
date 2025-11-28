@@ -93,6 +93,33 @@ public interface PermissionServices extends Initializable {
                                 final @NonNull Permission permission);
 
     /**
+     * Updates the permission weight for a given {@link Permittable}
+     * and {@link Permission}.
+     *
+     * <p>
+     * This method modifies the stored permission weight for the specified
+     * permittable and permission node. The weight should follow the system rules:
+     * <ul>
+     *     <li>-1 = unset</li>
+     *     <li>0 = false</li>
+     *     <li>1 = true</li>
+     * </ul>
+     * </p>
+     *
+     * <p>
+     *     Important: The implementation must ensure that -1 leads to the removal
+     *     of the permission entry from the storage, effectively unsetting it.
+     * </p>
+     *
+     * @param permittable the permittable (player or group) to update
+     * @param permission  the permission node to update
+     * @param weight      the new weight to set
+     */
+    void updatePermissionWeight(final @NonNull Permittable permittable,
+                                final @NonNull Permission permission,
+                                final int weight);
+
+    /**
      * Retrieves a {@link PermittableGroup} by its string ID.
      *
      * @param id the string identifier of the group
