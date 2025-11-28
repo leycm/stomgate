@@ -50,9 +50,4 @@ public interface PermissionServices extends Initializable {
         return Initializable.getInstance(PermissionServices.class);
     }
 
-    @Override
-    default void onInstall() {
-        MinecraftServer.getConnectionManager().setPlayerProvider();
-    }
-
 }
