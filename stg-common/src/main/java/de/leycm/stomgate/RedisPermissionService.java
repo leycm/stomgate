@@ -45,10 +45,19 @@ public class RedisPermissionService implements PermissionServices {
 
     }
 
-
     @Override
     public @Nullable PermittableGroup permittableGroupOf(@NonNull String id) {
         return null;
+    }
+
+    @Override
+    public @Nullable PermittableGroup parentOf(@NonNull Permittable permittable) {
+        return null;
+    }
+
+    @Override
+    public void setParentOf(@NonNull Permittable permittable, PermittableGroup parent) {
+
     }
 
     @Override

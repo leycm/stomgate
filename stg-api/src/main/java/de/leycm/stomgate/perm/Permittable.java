@@ -42,9 +42,13 @@ import java.util.function.Predicate;
  */
 public interface Permittable {
 
-    @Nullable PermittableGroup getParent();
+    default @Nullable PermittableGroup getParent() {
+        return PermissionServices.getInstance().parentOf(this);
+    }
 
-    @Nullable PermittableGroup setParent();
+    default void setParent(PermittableGroup parent) {
+        PermissionServices.getInstance().setParentOf(this, parent);
+    }
 
 
     /**

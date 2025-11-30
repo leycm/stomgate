@@ -145,6 +145,12 @@ public interface PermissionServices extends Initializable {
         return null;
     }
 
+    // TODO: Add javadoc
+    @Nullable PermittableGroup parentOf(final @NonNull Permittable permittable);
+
+    // TODO: Add javadoc
+    void setParentOf(final @NonNull Permittable permittable, PermittableGroup parent);
+
     /**
      * Retrieves a {@link Permittable} (player or group) by its {@link UUID}.
      *
